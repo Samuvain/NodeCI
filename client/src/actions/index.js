@@ -18,7 +18,7 @@ export const submitBlog = (values, file, history) => async dispatch => {
 
   if (file !== null) {
     const uploadConfig = await axios.get('/api/upload');
-    const upload = await axios.put(uploadConfig.data.url, file, {
+    await axios.put(uploadConfig.data.url, file, {
       headers: {
         'Content-Type': file.type
       }
