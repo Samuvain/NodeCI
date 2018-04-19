@@ -26,7 +26,7 @@ test('when signed in, shows logout button', async () => {
     await page.login();
 
     const selector = 'a[href="/auth/logout"]'
-    //await page.waitFor(selector);
+    await page.waitFor(selector);
 
     const text = await page.getContentsOf(selector);
 

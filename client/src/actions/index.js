@@ -14,20 +14,21 @@ export const handleToken = token => async dispatch => {
 };
 
 export const submitBlog = (values, file, history) => async dispatch => {
-  const uploadConfig = await axios.get('/api/upload');
+  let imageUrl;
 
-  console.log(uploadConfig, file);
+  if (file !== null) {
+    const uploadConfig = await axios.get('/api/upload');
+    const upload = await axios.put(uploadConfig.data.url, file, {
+      headers: {
+        'Content-Type': file.type
+      }
+    });
 
-  const upload = await axios.put(uploadConfig.data.url, file, {
-    headers: {
-      'Content-Type': file.type
-    }
-  });
-
-  console.log(upload);
+    imageUrl = uploadConfig.data.key;
+  }
 
   const res = await axios.post('/api/blogs', {
-    ...values, imageUrl: uploadConfig.data.key
+    ...values, imageUrl
   });
 
   history.push('/blogs');
